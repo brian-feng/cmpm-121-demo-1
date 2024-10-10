@@ -32,7 +32,11 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 5.5em;
+  line-height: 0;
+}
+h2 {
+  font-size: 3.0em;
   line-height: 1.1;
 }
 
