@@ -66,11 +66,13 @@ const upgrade1 = <HTMLButtonElement>document.createElement("button");
 upgrade1.textContent = "Buy Heavier Dumbbells";
 upgrade1.style.fontSize = "2em";
 upgrade1.style.border = "4px solid transparent";
-upgrade1.style.backgroundColor = "#b6b6b6"
-upgrade1.onclick = () => {cps += 1};
+upgrade1.style.backgroundColor = "#b6b6b6";
+upgrade1.onclick = () => {
+  cps += 1;
+};
 app.append(upgrade1);
 const upgrade2 = <HTMLButtonElement>document.createElement("button");
 upgrade2.textContent = "Buy Plates";
-const spacer = document.createElement("space")
+const spacer = document.createElement("space");
 app.append(spacer);
 app.append(upgrade2);
