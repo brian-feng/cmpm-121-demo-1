@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Lifty Clicker";
+const gameName = "CLICK TO LIFT";
 document.title = gameName;
 const header = document.createElement("h1");
 header.innerHTML = "CLICK TO LIFT";
@@ -17,10 +17,13 @@ const button: HTMLButtonElement = <HTMLButtonElement>(
   document.createElement("button")
 );
 button.textContent = "💪";
+button.onclick = () => {
+  new Event("click");
+};
 app.append(button);
 
-button.onclick = () => {
+app.addEventListener("click", () => {
   gains += 1;
   gainsText.innerHTML = "GAINS: " + gains.toString();
-  console.log(gains);
-};
+  console.log(gains); 
+}, false);
