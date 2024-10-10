@@ -1,29 +1,45 @@
 import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
-
 const gameName = "CLICK TO LIFT";
 document.title = gameName;
-const header = document.createElement("h1");
-header.innerHTML = "CLICK TO LIFT";
-app.append(header);
-
 let gains: number = 0;
-const gainsText = document.createElement("h2");
-gainsText.innerHTML = "GAINS: " + gains.toString();
-app.append(gainsText);
 
-const button: HTMLButtonElement = <HTMLButtonElement>(
-  document.createElement("button")
-);
-button.textContent = "💪";
-button.onclick = () => {
-  new Event("click");
-};
+function makeHeader(): HTMLElement {
+  const header = document.createElement("h1");
+  header.innerHTML = "CLICK TO LIFT";
+  return header;
+}
+
+function makeGainsText(): HTMLElement {
+  const gainsText = document.createElement("h2");
+  gainsText.innerHTML = "GAINS: " + gains.toString();
+  return gainsText;
+}
+
+function makeButton(): HTMLButtonElement {
+  const button: HTMLButtonElement = <HTMLButtonElement>(
+    document.createElement("button")
+  );
+  button.textContent = "💪";
+  button.onclick = () => {
+    new Event("click");
+  };
+  return button;
+}
+
+const gainsText: HTMLElement = makeGainsText();
+const button: HTMLButtonElement = makeButton();
+app.append(makeHeader());
+app.append(gainsText);
 app.append(button);
 
-app.addEventListener("click", () => {
-  gains += 1;
-  gainsText.innerHTML = "GAINS: " + gains.toString();
-  console.log(gains); 
-}, false);
+app.addEventListener(
+  "click",
+  () => {
+    gains += 1;
+    gainsText.innerHTML = "GAINS: " + gains.toString();
+    console.log(gains);
+  },
+  false,
+);
