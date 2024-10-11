@@ -17,14 +17,23 @@ function makeGainsText(): HTMLElement {
   return gainsText;
 }
 
+function updateGainsText() {
+  gainsText.innerHTML =
+    "GAINS: " + (Math.round(gains * 100) / 100).toFixed(2).toString();
+}
+
+function increaseGains() {
+  gains += 1;
+  updateGainsText();
+  new Event("check");
+}
+
 function makeButton(): HTMLButtonElement {
   const button: HTMLButtonElement = <HTMLButtonElement>(
     document.createElement("button")
   );
   button.textContent = "💪";
-  button.onclick = () => {
-    new Event("click");
-  };
+  button.addEventListener("click", increaseGains);
   return button;
 }
 
@@ -34,17 +43,7 @@ app.append(makeHeader());
 app.append(gainsText);
 app.append(button);
 
-function updateGainsText() {
-  gainsText.innerHTML =
-    "GAINS: " + (Math.round(gains * 100) / 100).toFixed(2).toString();
-}
 
-function increaseGains() {
-  gains += 1;
-  updateGainsText();
-  console.log(gains);
-}
-app.addEventListener("click", increaseGains, false);
 
 let cps: number = 0;
 let start: DOMHighResTimeStamp;
@@ -55,7 +54,7 @@ function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
   const elapsed = timestamp - start;
   gains += (cps * elapsed) / 1000;
   updateGainsText();
-  console.log(elapsed);
+  checkButtons();
   start = <number>document.timeline.currentTime;
   requestAnimationFrame(increaseGainsByFrame);
 }
@@ -67,10 +66,20 @@ upgrade1.textContent = "Buy Heavier Dumbbells";
 upgrade1.style.fontSize = "2em";
 upgrade1.style.border = "4px solid transparent";
 upgrade1.style.backgroundColor = "#b6b6b6";
-upgrade1.onclick = () => {
-  cps += 1;
-};
+
+function upgrade1Click() {
+  cps += 0.1;
+  gains -= 10;
+}
+
+function checkButtons() {
+  upgrade1.disabled = gains < 10;
+}
+
+upgrade1.addEventListener("click", upgrade1Click);
+upgrade1.disabled = true;
 app.append(upgrade1);
+
 const upgrade2 = <HTMLButtonElement>document.createElement("button");
 upgrade2.textContent = "Buy Plates";
 const spacer = document.createElement("space");
