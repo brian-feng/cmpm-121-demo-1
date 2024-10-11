@@ -43,8 +43,6 @@ app.append(makeHeader());
 app.append(gainsText);
 app.append(button);
 
-
-
 let cps: number = 0;
 let start: DOMHighResTimeStamp;
 function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
