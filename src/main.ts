@@ -66,8 +66,13 @@ requestAnimationFrame(increaseGainsByFrame);
 
 app.append(document.createElement("body"));
 
-function setUpgrades(upgrade: HTMLButtonElement, text: string, cost: number, this_cps: number){
-  upgrade.textContent = text
+function setUpgrades(
+  upgrade: HTMLButtonElement,
+  text: string,
+  cost: number,
+  this_cps: number,
+) {
+  upgrade.textContent = text;
   upgrade.style.fontSize = "2em";
   upgrade.style.border = "4px solid transparent";
   upgrade.style.backgroundColor = "#b6b6b6";
@@ -75,9 +80,8 @@ function setUpgrades(upgrade: HTMLButtonElement, text: string, cost: number, thi
   upgrade.addEventListener("click", () => {
     gains -= cost;
     cps += this_cps;
-  })
+  });
   app.append(upgrade);
-
 }
 
 const upgrade1 = <HTMLButtonElement>document.createElement("button");
@@ -89,4 +93,4 @@ setUpgrades(upgrade2, "Buy Plates", 20, 2);
 setUpgrades(upgrade3, "Buy Creatine", 30, 10);
 
 upgrade2.style.marginLeft = "10px";
-upgrade3.style.marginLeft = "10px"; 
+upgrade3.style.marginLeft = "10px";
