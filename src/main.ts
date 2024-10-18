@@ -11,15 +11,21 @@ function makeHeader(): HTMLElement {
   return header;
 }
 
+function makeGainsConstant(): HTMLElement {
+  const gainsConstant = document.createElement("h2");
+  gainsConstant.innerHTML = "GAINS: ";
+  gainsConstant.style.marginBottom = "1px";
+  return gainsConstant;
+}
 function makeGainsText(): HTMLElement {
   const gainsText = document.createElement("h2");
-  gainsText.innerHTML = "GAINS: " + gains.toString();
+  gainsText.innerHTML = gains.toString();
+  gainsText.style.marginTop = "1px" ;
   return gainsText;
 }
 
 function updateGainsText() {
-  gainsText.innerHTML =
-    "GAINS: " + (Math.round(gains * 100) / 100).toFixed(2).toString();
+  gainsText.innerHTML = (Math.round(gains * 100) / 100).toFixed(2).toString();
 }
 
 function increaseGains() {
@@ -43,9 +49,11 @@ function checkButtons() {
   upgrade3.disabled = gains < 30;
 }
 
+const gainsConstant: HTMLElement = makeGainsConstant();
 const gainsText: HTMLElement = makeGainsText();
 const button: HTMLButtonElement = makeButton();
 app.append(makeHeader());
+app.append(gainsConstant);  
 app.append(gainsText);
 app.append(button);
 
@@ -64,7 +72,18 @@ function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
 }
 requestAnimationFrame(increaseGainsByFrame);
 
-app.append(document.createElement("body"));
+function makeGPSText(): HTMLElement {
+  const gpsText = document.createElement("h2");
+  gpsText.innerHTML = "GAINS per second: " + cps.toString();
+  return gpsText;
+}
+
+function updateGPSText(gpsText: HTMLElement) {
+  gpsText.innerHTML = "GAINS per second: " + cps.toString();
+}
+
+const gpsText = makeGPSText();
+app.append(gpsText);
 
 function setUpgrades(
   upgrade: HTMLButtonElement,
@@ -80,6 +99,7 @@ function setUpgrades(
   upgrade.addEventListener("click", () => {
     gains -= cost;
     cps += this_cps;
+    updateGPSText(gpsText);
   });
   app.append(upgrade);
 }
