@@ -47,12 +47,15 @@ interface Item {
   name: string;
   cost: number;
   rate: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "Dumbbells", cost: 10, rate: 0.1 },
-  { name: "Plates", cost: 100, rate: 2 },
-  { name: "Creatine", cost: 1000, rate: 50 },
+  { name: "Dumbbells", cost: 10, rate: 0.1, description: "Buy heavy dumbbells to curl" },
+  { name: "Plates", cost: 100, rate: 2, description: "Buy heavy plates to squat" },
+  { name: "Protein Shake", cost: 1000, rate: 50, description: "Buy protein shakes to grow" },
+  { name: "Creatine", cost: 10000, rate: 100, description: "Buy creatine to get swole" },
+  { name: "Steroids", cost: 100000, rate: 1000, description: "Sometimes in life there are shortcuts" },
 ];
 
 const gainsConstant: HTMLElement = makeGainsConstant();
@@ -80,12 +83,12 @@ requestAnimationFrame(increaseGainsByFrame);
 
 function makeGPSText(): HTMLElement {
   const gpsText = document.createElement("h2");
-  gpsText.innerHTML = "GAINS per second: " + cps.toString();
+  gpsText.innerHTML = "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
   return gpsText;
 }
 
 function updateGPSText(gpsText: HTMLElement) {
-  gpsText.innerHTML = "GAINS per second: " + cps.toString();
+  gpsText.innerHTML = "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
 }
 
 const gpsText = makeGPSText();
@@ -98,6 +101,7 @@ function makeUpgrades(item: Item) {
   upgrade.style.border = "4px solid transparent";
   upgrade.style.backgroundColor = "#b6b6b6";
   upgrade.disabled = true;
+  upgrade.title = item.description;
   upgrade.addEventListener("click", () => {
     gains -= item.cost;
     cps += item.rate;
@@ -111,6 +115,9 @@ function makeUpgrades(item: Item) {
 const upgrades: HTMLButtonElement[] = [];
 for (let i = 0; i < availableItems.length; i++) {
   upgrades.push(makeUpgrades(availableItems[i]));
+  if (i > 0) {
+    upgrades[i].style.marginLeft = "10px";
+  }
 }
 
 function checkButtons() {
@@ -119,5 +126,4 @@ function checkButtons() {
   }
 }
 
-upgrades[1].style.marginLeft = "10px";
-upgrades[2].style.marginLeft = "10px";
+
