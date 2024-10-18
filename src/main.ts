@@ -20,7 +20,7 @@ function makeGainsConstant(): HTMLElement {
 function makeGainsText(): HTMLElement {
   const gainsText = document.createElement("h2");
   gainsText.innerHTML = gains.toString();
-  gainsText.style.marginTop = "1px";
+  gainsText.style.marginTop = "1px" ;
   return gainsText;
 }
 
@@ -43,17 +43,18 @@ function makeButton(): HTMLButtonElement {
   return button;
 }
 
+const prices = [10, 20, 30];
 function checkButtons() {
-  upgrade1.disabled = gains < 10;
-  upgrade2.disabled = gains < 20;
-  upgrade3.disabled = gains < 30;
+  upgrade1.disabled = gains < prices[0];
+  upgrade2.disabled = gains < prices[1];
+  upgrade3.disabled = gains < prices[2];
 }
 
 const gainsConstant: HTMLElement = makeGainsConstant();
 const gainsText: HTMLElement = makeGainsText();
 const button: HTMLButtonElement = makeButton();
 app.append(makeHeader());
-app.append(gainsConstant);
+app.append(gainsConstant);  
 app.append(gainsText);
 app.append(button);
 
@@ -88,7 +89,7 @@ app.append(gpsText);
 function setUpgrades(
   upgrade: HTMLButtonElement,
   text: string,
-  cost: number,
+  price_index: number,
   this_cps: number,
 ) {
   upgrade.textContent = text;
@@ -97,9 +98,10 @@ function setUpgrades(
   upgrade.style.backgroundColor = "#b6b6b6";
   upgrade.disabled = true;
   upgrade.addEventListener("click", () => {
-    gains -= cost;
+    gains -= prices[price_index];
     cps += this_cps;
     updateGPSText(gpsText);
+    prices[price_index] *= 1.15;
   });
   app.append(upgrade);
 }
@@ -108,9 +110,9 @@ const upgrade1 = <HTMLButtonElement>document.createElement("button");
 const upgrade2 = <HTMLButtonElement>document.createElement("button");
 const upgrade3 = <HTMLButtonElement>document.createElement("button");
 
-setUpgrades(upgrade1, "Buy Dumbells", 10, 0.1);
-setUpgrades(upgrade2, "Buy Plates", 20, 2);
-setUpgrades(upgrade3, "Buy Creatine", 30, 10);
+setUpgrades(upgrade1, "Buy Dumbells", 0, 0.1);
+setUpgrades(upgrade2, "Buy Plates", 1, 2);
+setUpgrades(upgrade3, "Buy Creatine", 2, 10);
 
 upgrade2.style.marginLeft = "10px";
 upgrade3.style.marginLeft = "10px";
