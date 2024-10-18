@@ -20,7 +20,7 @@ function makeGainsConstant(): HTMLElement {
 function makeGainsText(): HTMLElement {
   const gainsText = document.createElement("h2");
   gainsText.innerHTML = gains.toString();
-  gainsText.style.marginTop = "1px" ;
+  gainsText.style.marginTop = "1px";
   return gainsText;
 }
 
@@ -54,7 +54,7 @@ const gainsConstant: HTMLElement = makeGainsConstant();
 const gainsText: HTMLElement = makeGainsText();
 const button: HTMLButtonElement = makeButton();
 app.append(makeHeader());
-app.append(gainsConstant);  
+app.append(gainsConstant);
 app.append(gainsText);
 app.append(button);
 
