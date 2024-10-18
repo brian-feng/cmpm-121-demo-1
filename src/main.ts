@@ -44,15 +44,15 @@ function makeButton(): HTMLButtonElement {
 }
 
 interface Item {
-  name: string,
-  cost: number,
-  rate: number
-};
+  name: string;
+  cost: number;
+  rate: number;
+}
 
-const availableItems : Item[] = [
-  {name: "Dumbbells", cost: 10, rate: 0.1},
-  {name: "Plates", cost: 100, rate: 2},
-  {name: "Creatine", cost: 1000, rate: 50},
+const availableItems: Item[] = [
+  { name: "Dumbbells", cost: 10, rate: 0.1 },
+  { name: "Plates", cost: 100, rate: 2 },
+  { name: "Creatine", cost: 1000, rate: 50 },
 ];
 
 const gainsConstant: HTMLElement = makeGainsConstant();
@@ -91,7 +91,7 @@ function updateGPSText(gpsText: HTMLElement) {
 const gpsText = makeGPSText();
 app.append(gpsText);
 
-function makeUpgrades(item: Item){
+function makeUpgrades(item: Item) {
   const upgrade = <HTMLButtonElement>document.createElement("button");
   upgrade.textContent = item.name;
   upgrade.style.fontSize = "2em";
@@ -108,13 +108,13 @@ function makeUpgrades(item: Item){
   return upgrade;
 }
 
-const upgrades: HTMLButtonElement[] = []
-for (let i = 0; i < availableItems.length; i++){
+const upgrades: HTMLButtonElement[] = [];
+for (let i = 0; i < availableItems.length; i++) {
   upgrades.push(makeUpgrades(availableItems[i]));
 }
 
 function checkButtons() {
-  for (let i = 0; i < availableItems.length; i++){
+  for (let i = 0; i < availableItems.length; i++) {
     upgrades[i].disabled = gains < availableItems[i].cost;
   }
 }
