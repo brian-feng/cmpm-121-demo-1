@@ -51,11 +51,36 @@ interface Item {
 }
 
 const availableItems: Item[] = [
-  { name: "Dumbbells", cost: 10, rate: 0.1, description: "Buy heavy dumbbells to curl" },
-  { name: "Plates", cost: 100, rate: 2, description: "Buy heavy plates to squat" },
-  { name: "Protein Shake", cost: 1000, rate: 50, description: "Buy protein shakes to grow" },
-  { name: "Creatine", cost: 10000, rate: 100, description: "Buy creatine to get swole" },
-  { name: "Steroids", cost: 100000, rate: 1000, description: "Sometimes in life there are shortcuts" },
+  {
+    name: "Dumbbells",
+    cost: 10,
+    rate: 0.1,
+    description: "Buy heavy dumbbells to curl",
+  },
+  {
+    name: "Plates",
+    cost: 100,
+    rate: 2,
+    description: "Buy heavy plates to squat",
+  },
+  {
+    name: "Protein Shake",
+    cost: 1000,
+    rate: 50,
+    description: "Buy protein shakes to grow",
+  },
+  {
+    name: "Creatine",
+    cost: 10000,
+    rate: 100,
+    description: "Buy creatine to get swole",
+  },
+  {
+    name: "Steroids",
+    cost: 100000,
+    rate: 1000,
+    description: "Sometimes in life there are shortcuts",
+  },
 ];
 
 const gainsConstant: HTMLElement = makeGainsConstant();
@@ -83,12 +108,14 @@ requestAnimationFrame(increaseGainsByFrame);
 
 function makeGPSText(): HTMLElement {
   const gpsText = document.createElement("h2");
-  gpsText.innerHTML = "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
+  gpsText.innerHTML =
+    "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
   return gpsText;
 }
 
 function updateGPSText(gpsText: HTMLElement) {
-  gpsText.innerHTML = "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
+  gpsText.innerHTML =
+    "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
 }
 
 const gpsText = makeGPSText();
@@ -125,5 +152,3 @@ function checkButtons() {
     upgrades[i].disabled = gains < availableItems[i].cost;
   }
 }
-
-
