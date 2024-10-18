@@ -37,6 +37,12 @@ function makeButton(): HTMLButtonElement {
   return button;
 }
 
+function checkButtons() {
+  upgrade1.disabled = gains < 10;
+  upgrade2.disabled = gains < 20;
+  upgrade3.disabled = gains < 30;
+}
+
 const gainsText: HTMLElement = makeGainsText();
 const button: HTMLButtonElement = makeButton();
 app.append(makeHeader());
@@ -59,27 +65,28 @@ function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
 requestAnimationFrame(increaseGainsByFrame);
 
 app.append(document.createElement("body"));
+
+function setUpgrades(upgrade: HTMLButtonElement, text: string, cost: number, this_cps: number){
+  upgrade.textContent = text
+  upgrade.style.fontSize = "2em";
+  upgrade.style.border = "4px solid transparent";
+  upgrade.style.backgroundColor = "#b6b6b6";
+  upgrade.disabled = true;
+  upgrade.addEventListener("click", () => {
+    gains -= cost;
+    cps += this_cps;
+  })
+  app.append(upgrade);
+
+}
+
 const upgrade1 = <HTMLButtonElement>document.createElement("button");
-upgrade1.textContent = "Buy Heavier Dumbbells";
-upgrade1.style.fontSize = "2em";
-upgrade1.style.border = "4px solid transparent";
-upgrade1.style.backgroundColor = "#b6b6b6";
-
-function upgrade1Click() {
-  cps += 0.1;
-  gains -= 10;
-}
-
-function checkButtons() {
-  upgrade1.disabled = gains < 10;
-}
-
-upgrade1.addEventListener("click", upgrade1Click);
-upgrade1.disabled = true;
-app.append(upgrade1);
-
 const upgrade2 = <HTMLButtonElement>document.createElement("button");
-upgrade2.textContent = "Buy Plates";
-const spacer = document.createElement("space");
-app.append(spacer);
-app.append(upgrade2);
+const upgrade3 = <HTMLButtonElement>document.createElement("button");
+
+setUpgrades(upgrade1, "Buy Dumbells", 10, 0.1);
+setUpgrades(upgrade2, "Buy Plates", 20, 2);
+setUpgrades(upgrade3, "Buy Creatine", 30, 10);
+
+upgrade2.style.marginLeft = "10px";
+upgrade3.style.marginLeft = "10px"; 

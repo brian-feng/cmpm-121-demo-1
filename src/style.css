@@ -50,7 +50,7 @@ h2 {
 button {
   border-radius: 20px;
   border: 10px solid transparent;
-  padding: 0.2em 0.2em;
+  padding: 0.2em 0.3em;
   font-size: 8em;
   font-weight: 500;
   font-family: inherit;
@@ -59,12 +59,12 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #000000;
-  padding: 0.2em 0.2em;
+  border-color: #ffffff;
+  padding: 0.2em 0.3em;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 0.5px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
