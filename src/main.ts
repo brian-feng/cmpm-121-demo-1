@@ -43,12 +43,17 @@ function makeButton(): HTMLButtonElement {
   return button;
 }
 
-const prices = [10, 20, 30];
-function checkButtons() {
-  upgrade1.disabled = gains < prices[0];
-  upgrade2.disabled = gains < prices[1];
-  upgrade3.disabled = gains < prices[2];
-}
+interface Item {
+  name: string,
+  cost: number,
+  rate: number
+};
+
+const availableItems : Item[] = [
+  {name: "Dumbbells", cost: 10, rate: 0.1},
+  {name: "Plates", cost: 100, rate: 2},
+  {name: "Creatine", cost: 1000, rate: 50},
+];
 
 const gainsConstant: HTMLElement = makeGainsConstant();
 const gainsText: HTMLElement = makeGainsText();
@@ -86,33 +91,33 @@ function updateGPSText(gpsText: HTMLElement) {
 const gpsText = makeGPSText();
 app.append(gpsText);
 
-function setUpgrades(
-  upgrade: HTMLButtonElement,
-  text: string,
-  price_index: number,
-  this_cps: number,
-) {
-  upgrade.textContent = text;
+function makeUpgrades(item: Item){
+  const upgrade = <HTMLButtonElement>document.createElement("button");
+  upgrade.textContent = item.name;
   upgrade.style.fontSize = "2em";
   upgrade.style.border = "4px solid transparent";
   upgrade.style.backgroundColor = "#b6b6b6";
   upgrade.disabled = true;
   upgrade.addEventListener("click", () => {
-    gains -= prices[price_index];
-    cps += this_cps;
+    gains -= item.cost;
+    cps += item.rate;
     updateGPSText(gpsText);
-    prices[price_index] *= 1.15;
+    item.cost *= 1.15;
   });
   app.append(upgrade);
+  return upgrade;
 }
 
-const upgrade1 = <HTMLButtonElement>document.createElement("button");
-const upgrade2 = <HTMLButtonElement>document.createElement("button");
-const upgrade3 = <HTMLButtonElement>document.createElement("button");
+const upgrades: HTMLButtonElement[] = []
+for (let i = 0; i < availableItems.length; i++){
+  upgrades.push(makeUpgrades(availableItems[i]));
+}
 
-setUpgrades(upgrade1, "Buy Dumbells", 0, 0.1);
-setUpgrades(upgrade2, "Buy Plates", 1, 2);
-setUpgrades(upgrade3, "Buy Creatine", 2, 10);
+function checkButtons() {
+  for (let i = 0; i < availableItems.length; i++){
+    upgrades[i].disabled = gains < availableItems[i].cost;
+  }
+}
 
-upgrade2.style.marginLeft = "10px";
-upgrade3.style.marginLeft = "10px";
+upgrades[1].style.marginLeft = "10px";
+upgrades[2].style.marginLeft = "10px";
