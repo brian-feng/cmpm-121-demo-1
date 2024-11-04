@@ -7,17 +7,17 @@ let gains: number = 0;
 
 function makeHeader(): HTMLElement {
   const header = document.createElement("h1");
-  header.innerHTML = "CLICK TO LIFT";
+  header.innerHTML = gameName;
   return header;
 }
 
-function makeGainsConstant(): HTMLElement {
+function makeGainsText(): HTMLElement {
   const gainsConstant = document.createElement("h2");
   gainsConstant.innerHTML = "GAINS: ";
   gainsConstant.style.marginBottom = "1px";
   return gainsConstant;
 }
-function makeGainsText(): HTMLElement {
+function makeGainsNumber(): HTMLElement {
   const gainsText = document.createElement("h2");
   gainsText.innerHTML = gains.toString();
   gainsText.style.marginTop = "1px";
@@ -35,9 +35,7 @@ function increaseGains() {
 }
 
 function makeButton(): HTMLButtonElement {
-  const button: HTMLButtonElement = <HTMLButtonElement>(
-    document.createElement("button")
-  );
+  const button: HTMLButtonElement = document.createElement("button")
   button.textContent = "💪";
   button.addEventListener("click", increaseGains);
   return button;
@@ -83,22 +81,22 @@ const availableItems: Item[] = [
   },
 ];
 
-const gainsConstant: HTMLElement = makeGainsConstant();
-const gainsText: HTMLElement = makeGainsText();
+const gainsConstant: HTMLElement = makeGainsText();
+const gainsText: HTMLElement = makeGainsNumber();
 const button: HTMLButtonElement = makeButton();
 app.append(makeHeader());
 app.append(gainsConstant);
 app.append(gainsText);
 app.append(button);
 
-let cps: number = 0;
+let gainsPerSecond: number = 0;
 let start: DOMHighResTimeStamp;
 function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
   if (start == undefined) {
     start = timestamp;
   }
   const elapsed = timestamp - start;
-  gains += (cps * elapsed) / 1000;
+  gains += (gainsPerSecond * elapsed) / 1000;
   updateGainsText();
   checkButtons();
   start = <number>document.timeline.currentTime;
@@ -106,23 +104,27 @@ function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
 }
 requestAnimationFrame(increaseGainsByFrame);
 
+function roundNumberForText(n: number): string {
+  return (Math.round(n * 100) / 100).toFixed(1).toString()
+}
+
 function makeGPSText(): HTMLElement {
   const gpsText = document.createElement("h2");
   gpsText.innerHTML =
-    "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
+    "GAINS per second: " + roundNumberForText(gainsPerSecond);
   return gpsText;
 }
 
 function updateGPSText(gpsText: HTMLElement) {
   gpsText.innerHTML =
-    "GAINS per second: " + (Math.round(cps * 100) / 100).toFixed(1).toString();
+    "GAINS per second: " + roundNumberForText(gainsPerSecond);
 }
 
 const gpsText = makeGPSText();
 app.append(gpsText);
 
 function makeUpgrades(item: Item) {
-  const upgrade = <HTMLButtonElement>document.createElement("button");
+  const upgrade = document.createElement("button");
   upgrade.textContent = item.name;
   upgrade.style.fontSize = "2em";
   upgrade.style.border = "4px solid transparent";
@@ -131,7 +133,7 @@ function makeUpgrades(item: Item) {
   upgrade.title = item.description;
   upgrade.addEventListener("click", () => {
     gains -= item.cost;
-    cps += item.rate;
+    gainsPerSecond += item.rate;
     updateGPSText(gpsText);
     item.cost *= 1.15;
   });
