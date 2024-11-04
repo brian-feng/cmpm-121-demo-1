@@ -35,7 +35,7 @@ function increaseGains() {
 }
 
 function makeButton(): HTMLButtonElement {
-  const button: HTMLButtonElement = document.createElement("button")
+  const button: HTMLButtonElement = document.createElement("button");
   button.textContent = "💪";
   button.addEventListener("click", increaseGains);
   return button;
@@ -105,19 +105,17 @@ function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
 requestAnimationFrame(increaseGainsByFrame);
 
 function roundNumberForText(n: number): string {
-  return (Math.round(n * 100) / 100).toFixed(1).toString()
+  return (Math.round(n * 100) / 100).toFixed(1).toString();
 }
 
 function makeGPSText(): HTMLElement {
   const gpsText = document.createElement("h2");
-  gpsText.innerHTML =
-    "GAINS per second: " + roundNumberForText(gainsPerSecond);
+  gpsText.innerHTML = "GAINS per second: " + roundNumberForText(gainsPerSecond);
   return gpsText;
 }
 
 function updateGPSText(gpsText: HTMLElement) {
-  gpsText.innerHTML =
-    "GAINS per second: " + roundNumberForText(gainsPerSecond);
+  gpsText.innerHTML = "GAINS per second: " + roundNumberForText(gainsPerSecond);
 }
 
 const gpsText = makeGPSText();
