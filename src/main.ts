@@ -1,4 +1,5 @@
 import "./style.css";
+import imageSource from "./arnold.png";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 const gameName = "CLICK TO LIFT";
@@ -10,7 +11,6 @@ function makeHeader(): HTMLElement {
   header.innerHTML = gameName;
   return header;
 }
-
 function makeGainsText(): HTMLElement {
   const gainsConstant = document.createElement("h2");
   gainsConstant.innerHTML = "GAINS: ";
@@ -89,37 +89,10 @@ app.append(gainsConstant);
 app.append(gainsText);
 app.append(button);
 
+const spacer: HTMLElement = document.createElement("br");
+app.append(spacer);
+
 let gainsPerSecond: number = 0;
-let start: DOMHighResTimeStamp;
-function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
-  if (start == undefined) {
-    start = timestamp;
-  }
-  const elapsed = timestamp - start;
-  gains += (gainsPerSecond * elapsed) / 1000;
-  updateGainsText();
-  checkButtons();
-  start = <number>document.timeline.currentTime;
-  requestAnimationFrame(increaseGainsByFrame);
-}
-requestAnimationFrame(increaseGainsByFrame);
-
-function roundNumberForText(n: number): string {
-  return (Math.round(n * 100) / 100).toFixed(1).toString();
-}
-
-function makeGPSText(): HTMLElement {
-  const gpsText = document.createElement("h2");
-  gpsText.innerHTML = "GAINS per second: " + roundNumberForText(gainsPerSecond);
-  return gpsText;
-}
-
-function updateGPSText(gpsText: HTMLElement) {
-  gpsText.innerHTML = "GAINS per second: " + roundNumberForText(gainsPerSecond);
-}
-
-const gpsText = makeGPSText();
-app.append(gpsText);
 
 function makeUpgrades(item: Item) {
   const upgrade = document.createElement("button");
@@ -152,3 +125,39 @@ function checkButtons() {
     upgrades[i].disabled = gains < availableItems[i].cost;
   }
 }
+
+const arnold = document.createElement("img");
+arnold.src = imageSource;
+
+let start: DOMHighResTimeStamp;
+function increaseGainsByFrame(timestamp: DOMHighResTimeStamp) {
+  if (start == undefined) {
+    start = timestamp;
+  }
+  const elapsed = timestamp - start;
+  gains += (gainsPerSecond * elapsed) / 1000;
+  arnold.style.width = 100 + gains + "px";
+  updateGainsText();
+  checkButtons();
+  start = <number>document.timeline.currentTime;
+  requestAnimationFrame(increaseGainsByFrame);
+}
+requestAnimationFrame(increaseGainsByFrame);
+
+function roundNumberForText(n: number): string {
+  return (Math.round(n * 100) / 100).toFixed(1).toString();
+}
+
+function makeGPSText(): HTMLElement {
+  const gpsText = document.createElement("h2");
+  gpsText.innerHTML = "GAINS per second: " + roundNumberForText(gainsPerSecond);
+  return gpsText;
+}
+
+function updateGPSText(gpsText: HTMLElement) {
+  gpsText.innerHTML = "GAINS per second: " + roundNumberForText(gainsPerSecond);
+}
+
+const gpsText = makeGPSText();
+app.append(gpsText);
+app.append(arnold);
