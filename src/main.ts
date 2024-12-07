@@ -50,31 +50,31 @@ interface Item {
 
 const availableItems: Item[] = [
   {
-    name: "Dumbbells",
+    name: "Dumbbells: 0",
     cost: 10,
     rate: 0.1,
     description: "Buy heavy dumbbells to curl",
   },
   {
-    name: "Plates",
+    name: "Plates: 0",
     cost: 100,
     rate: 2,
     description: "Buy heavy plates to squat",
   },
   {
-    name: "Protein Shake",
+    name: "Protein Shake: 0",
     cost: 1000,
     rate: 50,
     description: "Buy protein shakes to grow",
   },
   {
-    name: "Creatine",
+    name: "Creatine: 0",
     cost: 10000,
     rate: 100,
     description: "Buy creatine to get swole",
   },
   {
-    name: "Steroids",
+    name: "Steroids: 0",
     cost: 100000,
     rate: 1000,
     description: "Sometimes in life there are shortcuts",
@@ -107,6 +107,8 @@ function makeUpgrades(item: Item) {
     gainsPerSecond += item.rate;
     updateGPSText(gpsText);
     item.cost *= 1.15;
+    item.name = item.name.split(":")[0] + ": " + (parseInt(item.name.split(":")[1]) + 1).toString();
+    upgrade.textContent = item.name;
   });
   app.append(upgrade);
   return upgrade;
