@@ -107,7 +107,10 @@ function makeUpgrades(item: Item) {
     gainsPerSecond += item.rate;
     updateGPSText(gpsText);
     item.cost *= 1.15;
-    item.name = item.name.split(":")[0] + ": " + (parseInt(item.name.split(":")[1]) + 1).toString();
+    item.name =
+      item.name.split(":")[0] +
+      ": " +
+      (parseInt(item.name.split(":")[1]) + 1).toString();
     upgrade.textContent = item.name;
   });
   app.append(upgrade);
